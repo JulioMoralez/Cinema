@@ -1,9 +1,15 @@
 package pack.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import pack.model.Film;
+import pack.model.Person;
+import pack.repository.Repo;
 
 @Controller
 public class HelloController {
@@ -17,10 +23,54 @@ public class HelloController {
     @Value("${spring.datasource.password}")
     private String password;
 
+    @Autowired
+    @Qualifier("PersonRepoImpl")
+    Repo<Person> personRepo;
 
-    @GetMapping("/hello")
-    String sayHello(Model model) {
+    @Autowired
+    @Qualifier("FilmRepoImpl")
+    Repo<Film> filmRepo;
+
+
+    @GetMapping("/add")
+    String add(){
+        Person person = new Person();
+        person.setLogin("Sam");
+        person.setPass("1234");
+        personRepo.save(person);
+        return "hello";
+    }
+
+    @GetMapping("/update/{id}")
+    String sayHello(@PathVariable("id") int id) {
+        Person person=personRepo.read(id);
+        if (person!=null){
+            person.setLogin("Jane");
+            person.setPass("qw1");
+            System.out.println(personRepo.update(person));
+        }
+        return "hello";
+    }
+
+    @GetMapping("/hello/{id}")
+    String sayHello(@PathVariable("id") int id, Model model) {
         model.addAttribute("message","ololo");
+        Person person = new Person();
+        person.setLogin("Sam");
+        person.setPass("1234");
+
+//        person = personRepo.read(id);
+//        if (person!=null){
+//            System.out.println(person);
+//        }else {
+//            System.out.println("no person");
+//        }
+
+//        List<Person> people = personRepo.readAll();
+//        people.forEach(System.out::println);
+
+        System.out.println(personRepo.delete(id));
+
         return "hello";
     }
 
@@ -33,9 +83,7 @@ public class HelloController {
 //            statement.execute("INSERT INTO person (name) VALUES ('Sam');");
 //            statement.execute("INSERT INTO person (name) VALUES ('Max');");
 //            ResultSet resultSet = statement.executeQuery("SELECT * FROM person");
-//            while (resultSet.next()){
-//                persons.add(new Person(resultSet.getInt(1), resultSet.getString(2)));
-//            }
+//
 //        } catch (SQLException e) {
 //            e.printStackTrace();
 //        }
