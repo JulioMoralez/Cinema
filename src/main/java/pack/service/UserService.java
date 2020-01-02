@@ -49,6 +49,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
+        user.setActive(true);
         user.setRoles(Collections.singleton(ROLE_USER));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepo.save(user);

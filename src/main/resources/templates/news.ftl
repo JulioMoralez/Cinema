@@ -28,16 +28,20 @@
             <td>${message.id}</td>
             <td>${message.text}</td>
             <td>${message.author.username}</td>
+            <#if message.picPath??>
+            <img src="/img/${message.picPath}"/>
+            </#if>
         </tr>
-    </#list>
+        </#list>
     </table>
 </div>
 </#if>
 
 <#if moderator??>
     <div>
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             <input type="text" name="text" placeholder="Введите сообщение">
+            <input type="file" name="picPath">
             <button type="submit">Отправить</button>
         </form>
     </div>

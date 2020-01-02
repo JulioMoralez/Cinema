@@ -23,6 +23,8 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     private boolean active;
+    private String email;
+    private String verifyCode;
 
     public User() {
     }
@@ -65,6 +67,22 @@ public class User implements UserDetails {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
     }
 
     @Override

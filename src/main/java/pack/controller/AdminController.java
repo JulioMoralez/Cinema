@@ -44,14 +44,26 @@ public class AdminController {
 
     @GetMapping("/user/{user}")
     public String userEdit(@AuthenticationPrincipal User authUser, @PathVariable User user, Model model){
-            if (authUser.getRoles().contains(ROLE_ADMIN)){
+            if ((user!=null) && (authUser.getRoles().contains(ROLE_ADMIN))){
                 model.addAttribute("user",user);
             }
             else {
-                model.addAttribute("user",authUser);
+                model.addAttribute("user",userService.read(authUser.getId()));
             }
         model.addAttribute("roles",ROLES);
         return "userEdit";
+    }
+
+    @GetMapping("/userEdit")
+    public String userEditRedirect(@AuthenticationPrincipal User authUser, Model model){
+        if (authUser.getRoles().contains(ROLE_ADMIN)){
+            return "redirect:/admin";
+        }
+        else {
+            model.addAttribute("user", userService.read(authUser.getId()));
+            model.addAttribute("roles",ROLES);
+            return "userEdit";
+        }
     }
 
     @PostMapping("/userEdit")

@@ -15,6 +15,8 @@ public class Message {
     @ManyToOne(fetch = FetchType.EAGER)
     private User author;
 
+    private String picPath;
+
     public Message() {
     }
 
@@ -45,6 +47,14 @@ public class Message {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public String getPicPath() {
+        return picPath;
+    }
+
+    public void setPicPath(String picPath) {
+        this.picPath = picPath;
     }
 
     @Override

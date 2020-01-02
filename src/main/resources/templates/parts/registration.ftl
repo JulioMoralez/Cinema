@@ -8,18 +8,17 @@
             <#else>
             <input name="username" type="text" placeholder="Username"/>
             </#if>
-        <#if usernameError??>
-        ${usernameError}
-        </#if>
+            ${usernameError?ifExists}
+        </div>
+        <div>
+            <input name="email" type="email" placeholder="email"/>
         </div>
         <div>
             <input name="password" type="password" placeholder="Password"/>
         </div>
         <div>
             <input name="passwordConfirm" type="password" placeholder="Confirm your password"/>
-            <#if passwordError??>
-            ${passwordError}
-            </#if>
+            ${passwordError?ifExists}
         </div>
         <button type="submit">Зарегистрироваться</button>
     </form>
