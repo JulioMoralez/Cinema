@@ -6,16 +6,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import pack.model.Role;
 import pack.model.User;
 import pack.repository.RoleRepo;
 import pack.repository.UserRepo;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
-import static pack.config.Consts.ROLE_USER;
+import static pack.config.Consts.*;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -78,4 +75,13 @@ public class UserService implements UserDetailsService {
     public Iterable<User> readAll() {
         return userRepo.findAll();
     }
+
+    public boolean isAdmin(User user){
+        return user.getRoles().contains(ROLE_ADMIN);
+    }
+
+    public boolean isModerator(User user){
+        return ((user.getRoles().contains(ROLE_ADMIN)) || (user.getRoles().contains(ROLE_MODERATOR)));
+    }
+
 }

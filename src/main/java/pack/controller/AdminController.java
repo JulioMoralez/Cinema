@@ -19,7 +19,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static pack.config.Consts.ROLES;
-import static pack.config.Consts.ROLE_ADMIN;
 
 @Controller
 public class AdminController {
@@ -44,7 +43,7 @@ public class AdminController {
 
     @GetMapping("/user/{user}")
     public String userEdit(@AuthenticationPrincipal User authUser, @PathVariable User user, Model model){
-            if ((user!=null) && (authUser.getRoles().contains(ROLE_ADMIN))){
+            if ((user!=null) && (userService.isAdmin(authUser))){
                 model.addAttribute("user",user);
             }
             else {
@@ -56,7 +55,7 @@ public class AdminController {
 
     @GetMapping("/userEdit")
     public String userEditRedirect(@AuthenticationPrincipal User authUser, Model model){
-        if (authUser.getRoles().contains(ROLE_ADMIN)){
+        if (userService.isAdmin(authUser)){
             return "redirect:/admin";
         }
         else {

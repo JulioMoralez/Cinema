@@ -27,9 +27,7 @@ public class HelloController {
     @Qualifier("PersonRepoImpl")
     Repo<Person> personRepo;
 
-    @Autowired
-    @Qualifier("FilmRepoImpl")
-    Repo<Film> filmRepo;
+
 
 
     @GetMapping("/add")
