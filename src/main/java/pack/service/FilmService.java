@@ -3,8 +3,14 @@ package pack.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pack.model.Film;
+import pack.model.Genre;
 import pack.model.Message;
 import pack.repository.FilmRepo;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 public class FilmService {
@@ -12,8 +18,15 @@ public class FilmService {
     @Autowired
     private FilmRepo filmRepo;
 
-    public Iterable<Film> findAll() {
+    @Autowired
+    private GenreService genreService;
+
+    public List<Film> findAll() {
         return filmRepo.findAll();
+    }
+
+    public Film findById(Integer id){
+        return filmRepo.findById(id).get();
     }
 
     public void save(Film film){
@@ -26,5 +39,18 @@ public class FilmService {
             return 1;
         }
         return -1;
+    }
+
+    public Set<Genre> getGenres(Map<String,String> form){
+        Iterable<Genre> genres = genreService.findAll();
+        Set<Genre> tempGenres = new HashSet<>();
+        for (String key:form.keySet()){
+            for (Genre genre : genres){
+                if (genre.getName().equals(key)){
+                    tempGenres.add(genre);
+                }
+            }
+        }
+        return tempGenres;
     }
 }

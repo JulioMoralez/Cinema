@@ -1,6 +1,7 @@
 package pack.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "t_genre")
@@ -11,6 +12,9 @@ public class Genre {
     private Integer id;
 
     private String name;
+
+    @ManyToMany(mappedBy = "genres")
+    private Set<Film> films;
 
     public Genre() {
     }
@@ -29,6 +33,14 @@ public class Genre {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Film> getFilms() {
+        return films;
+    }
+
+    public void setFilms(Set<Film> films) {
+        this.films = films;
     }
 
     @Override

@@ -1,7 +1,6 @@
 package pack.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,23 +12,21 @@ import pack.model.Message;
 import pack.model.User;
 import pack.repository.MessageRepo;
 import pack.service.UserService;
+import pack.service.UtilService;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 public class NewsController {
-
-    @Value("${upload.path}")
-    private String rootPicPath;
 
     @Autowired
     private MessageRepo messageRepo;
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UtilService utilService;
 
     @GetMapping("/news")
     String news(@AuthenticationPrincipal User user, Model model){
@@ -51,19 +48,7 @@ public class NewsController {
                    @RequestParam MultipartFile picPath,
                    @RequestParam String text){
         Message message = new Message(text,user);
-        if (picPath!=null && !picPath.getOriginalFilename().isEmpty()){
-            File uploadDir = new File(rootPicPath);
-            if (!uploadDir.exists()){
-                uploadDir.mkdir();
-            }
-            String resultPicPath = UUID.randomUUID().toString()+"."+picPath.getOriginalFilename();
-            try {
-                picPath.transferTo(new File(uploadDir + "/" + resultPicPath));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            message.setPicPath(resultPicPath);
-        }
+        message.setPicPath(utilService.generatePicPath(picPath));
         messageRepo.save(message);
         return "redirect:/news";
     }

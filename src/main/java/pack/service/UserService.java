@@ -6,11 +6,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import pack.model.Genre;
+import pack.model.Role;
 import pack.model.User;
 import pack.repository.RoleRepo;
 import pack.repository.UserRepo;
 
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import static pack.config.Consts.*;
 
@@ -82,6 +87,18 @@ public class UserService implements UserDetailsService {
 
     public boolean isModerator(User user){
         return ((user.getRoles().contains(ROLE_ADMIN)) || (user.getRoles().contains(ROLE_MODERATOR)));
+    }
+
+    public Set<Role> getRoles(Map<String,String> form){
+        Set<Role> tempRoles = new HashSet<>();
+        for (String key:form.keySet()){
+            for (Role role : ROLES){
+                if (role.getName().equals(key)){
+                    tempRoles.add(role);
+                }
+            }
+        }
+        return tempRoles;
     }
 
 }

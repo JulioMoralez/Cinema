@@ -72,16 +72,7 @@ public class AdminController {
             @RequestParam("id") User user,
             Model model){
         user.setUsername(username);
-        user.setRoles(null);
-        Set<Role> tempRoles = new HashSet<>();
-        for (String key:form.keySet()){
-            for (Role role : ROLES){
-                if (role.getName().equals(key)){
-                    tempRoles.add(role);
-                }
-            }
-        }
-        user.setRoles(tempRoles);
+        user.setRoles(userService.getRoles(form));
 
         if (!userService.updateUser(user)){
             model.addAttribute("usernameError", "Пользователь с таким именем уже существует");

@@ -1,6 +1,7 @@
 package pack.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "t_film")
@@ -14,8 +15,8 @@ public class Film {
     private Integer year;
     private String picPath;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Genre genre;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Genre> genres;
 
     public Film() {
     }
@@ -44,12 +45,12 @@ public class Film {
         this.year = year;
     }
 
-    public Genre getGenre() {
-        return genre;
+    public Set<Genre> getGenres() {
+        return genres;
     }
 
-    public void setGenre(Genre genre) {
-        this.genre = genre;
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
     }
 
     public String getPicPath() {
@@ -67,7 +68,7 @@ public class Film {
                 ", name='" + name + '\'' +
                 ", year=" + year +
                 ", picPath='" + picPath + '\'' +
-                ", genre=" + genre +
+                ", genres=" + genres +
                 '}';
     }
 }
