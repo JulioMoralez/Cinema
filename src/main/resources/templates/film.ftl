@@ -6,9 +6,17 @@
 
 <#if movies??>
 <div>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>name</th>
+        <th>year</th>
+        <th>genre</th>
+    </tr>
     <#list movies as ifilm>
-        <@f.filmRead value=ifilm />
+        <@f.filmReadFull value=ifilm />
     </#list>
+</table>
 </div>
 </#if>
 

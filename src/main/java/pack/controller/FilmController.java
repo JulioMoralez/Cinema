@@ -51,6 +51,12 @@ public class FilmController {
         return "redirect:/film";
     }
 
+    @GetMapping("/film/{film}")
+    public String filmForm(@AuthenticationPrincipal User authUser, @PathVariable Film film, Model model){
+        model.addAttribute("film",film);
+        return "filmForm";
+    }
+
     @GetMapping("/film/edit/{id}")
     String filmEdit(@AuthenticationPrincipal User authUser, @PathVariable Integer id, Model model){
         model.addAttribute("movies",filmService.findAll());
@@ -83,6 +89,7 @@ public class FilmController {
         Film film = new Film();
         film.setName(name);
         film.setYear(year);
+        film.setRating(50);
         film.setPicPath(utilService.generatePicPath(picPath));
 
         film.setGenres(filmService.getGenres(form));

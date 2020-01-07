@@ -1,16 +1,17 @@
 package pack.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pack.model.Film;
 import pack.model.Genre;
-import pack.model.Message;
 import pack.repository.FilmRepo;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class FilmService {
@@ -52,5 +53,13 @@ public class FilmService {
             }
         }
         return tempGenres;
+    }
+
+    public List<Film> findByDay(Integer day){
+        return filmRepo.findByDay(day);
+    }
+
+    public List<Film> findByDayWithRating(Integer day, Integer limit){
+        return filmRepo.findByDayWithRating(day, limit);
     }
 }

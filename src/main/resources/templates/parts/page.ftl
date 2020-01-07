@@ -15,3 +15,19 @@
 </body>
 </html>
 </#macro>
+
+<#macro calendar>
+<#if days??>
+    <table border="1" align="center" cellpadding="4" table-layout="fixed">
+    <tr>
+    <#list days as day>
+        <td align="center" width=10%">
+        <h2><a href="/schedule/day/${day.dayOfWeek}">${day.dayOfMonth}</a></h2>
+        <h5>${day.monthName}</h5>
+        <h5>${day.dayOfWeekName}</h5>
+        </td>
+    </#list>
+    </tr>
+    </table>
+</#if>
+</#macro>

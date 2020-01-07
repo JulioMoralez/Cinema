@@ -1,12 +1,5 @@
-<#macro filmRead value>
-<div>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>name</th>
-            <th>year</th>
-            <th>genre</th>
-        </tr>
+<#macro filmReadFull value>
+
         <tr>
             <td>${value.id}</td>
             <td>${value.name}</td>
@@ -20,12 +13,45 @@
             </td>
             <td><a href="/film/edit/${value.id}">edit</a></td>
             <td><a href="/film/delete/${value.id}">delete</a></td>
+            <td>
             <#if value.picPath??>
             <img src="/img/${value.picPath}"/>
             </#if>
+            </td>
         </tr>
-    </table>
-</div>
+</#macro>
+
+<#macro filmReadLine value>
+<tr>
+<td><a href="/film/${value.id}">${value.name}</a></td>
+<td>
+    <#list schedules as schedule>
+        <#if value.id==schedule.film.id>
+            <#if (schedule.time % 60)<10>
+                <a href="/hall/${schedule.id}">${(schedule.time / 60)?floor} : 0${schedule.time % 60}  </a>
+            <#else>
+                <a href="/hall/${schedule.id}">${(schedule.time / 60)?floor} : ${schedule.time % 60}  </a>
+            </#if>
+        </#if>
+    </#list>
+</td>
+</tr>
+</#macro>
+
+<#macro filmReadSmall value>
+<td>
+    <#if value.picPath??>
+    <img src="/img/${value.picPath}"/>
+    </#if>
+    <p>
+    ${value.name}
+    <p>
+        <#if value.genres??>
+        <#list value.genres as genre>
+        ${genre.name}<#sep>,
+    </#list>
+    </#if>
+</td>
 </#macro>
 
 <#macro filmEdit value>

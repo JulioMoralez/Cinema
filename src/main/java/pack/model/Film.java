@@ -1,6 +1,7 @@
 package pack.model;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Set;
 
 @Entity
@@ -14,8 +15,10 @@ public class Film {
     private String name;
     private Integer year;
     private String picPath;
+    private Integer length;
+    private Integer rating;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Genre> genres;
 
     public Film() {
@@ -61,6 +64,22 @@ public class Film {
         this.picPath = picPath;
     }
 
+    public Integer getLength() {
+        return length;
+    }
+
+    public void setLength(Integer length) {
+        this.length = length;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
         return "Film{" +
@@ -68,6 +87,7 @@ public class Film {
                 ", name='" + name + '\'' +
                 ", year=" + year +
                 ", picPath='" + picPath + '\'' +
+                ", length=" + length +
                 ", genres=" + genres +
                 '}';
     }
