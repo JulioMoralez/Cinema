@@ -3,7 +3,8 @@
         <td>${value.id}</td>
         <td><a href="/film/${value.film.id}">${value.film.name}</a></td>
         <td>${value.hall.name}</td>
-        <td>${value.day}</td>
+        <td>${value.date}</td>
+        <td>${value.price}</td>
         <td>${value.time}</td>
     </tr>
 </#macro>
@@ -34,7 +35,7 @@
 <select name="daysCombo">
 <#if days??>
 <#list days as day>
-<option value="${day.dayOfWeek}">${day.dayOfMonth}</option>
+<option value="${day.dayOfWeek}">${day.dayOfMonth} ${day.monthName}</option>
 </#list>
 <#else>
 <option value="-1">empty</option>
@@ -61,7 +62,8 @@
         </#if>
         </select>
 
-<button type="submit">Выбрать фильм</button>
+<input name="price" type="text" placeholder="Стоимость"/>
+<button type="submit">Добавить сеанс</button>
         </form>
 </div>
 </#macro>

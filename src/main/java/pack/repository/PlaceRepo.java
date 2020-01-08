@@ -11,5 +11,6 @@ import java.util.List;
 public interface PlaceRepo extends CrudRepository<Place, Integer> {
     List<Place> findByScheduleAndRowAndPlace(Schedule schedule, Integer rowValue, Integer placeValue);
     List<Place> findBySchedule(Schedule schedule);
+    List<Place> findByScheduleAndStatus(Schedule schedule, Integer status);
 
 }

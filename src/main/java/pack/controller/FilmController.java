@@ -81,7 +81,7 @@ public class FilmController {
 
     @PostMapping("/filmAdd")
     String filmAdd(@AuthenticationPrincipal User authUser,
-                    @RequestParam("name") String name,
+                   @RequestParam("name") String name,
                    @RequestParam("year") Integer year,
                    @RequestParam("picPath") MultipartFile picPath,
                    @RequestParam Map<String,String> form,

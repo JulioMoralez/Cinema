@@ -1,6 +1,8 @@
 package pack.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "t_hall")
@@ -48,6 +50,7 @@ public class Hall {
     public void setPlace(Integer place) {
         this.place = place;
     }
+
 
     @Override
     public String toString() {

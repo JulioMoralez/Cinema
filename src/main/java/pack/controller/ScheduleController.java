@@ -53,11 +53,13 @@ public class ScheduleController {
 
         model.addAttribute("days",utilService.getDaysList());
 
-        if (day==null) {
-            day=LocalDate.now().getDayOfWeek().getValue();
+        LocalDate localDate = LocalDate.now();
+        if (day!=null) {
+            int d = (day-localDate.getDayOfWeek().getValue()+7)%7;
+            localDate=localDate.plusDays(d);
         }
 
-        moviesToday=filmService.findByDay(day);
+        moviesToday=filmService.findByDate(localDate);
 
         moviesTodayBest.clear();
         int i=0;
@@ -69,7 +71,7 @@ public class ScheduleController {
         model.addAttribute("moviesToday",moviesToday);
         model.addAttribute("moviesTodayBest",moviesTodayBest);
 
-        model.addAttribute("schedules",scheduleService.findByDay(day));
+        model.addAttribute("schedules",scheduleService.findByDate(localDate));
 
 //            model.addAttribute("schedules",scheduleService.findAll());
 
@@ -85,11 +87,24 @@ public class ScheduleController {
                              @RequestParam("hallCombo") Hall hall,
                              @RequestParam("daysCombo") Integer day,
                              @RequestParam("hoursCombo") Integer hour,
-                             @RequestParam("minsCombo") Integer min){
+                             @RequestParam("minsCombo") Integer min,
+                             @RequestParam("price") String price){
         Schedule schedule = new Schedule();
         schedule.setFilm(film);
         schedule.setHall(hall);
-        schedule.setDay(day);
+        int p;
+        try {
+            p=Integer.parseInt(price);
+        }
+        catch (RuntimeException e){
+            p=100;
+        }
+        schedule.setPrice(p);
+
+        LocalDate localDate = LocalDate.now();
+        int d = (day-localDate.getDayOfWeek().getValue()+7)%7;
+        localDate=localDate.plusDays(d);
+        schedule.setDate(localDate);
         schedule.setTime(hour*60+min);
         scheduleService.save(schedule);
         redirectAttributes.addAttribute("film",film);

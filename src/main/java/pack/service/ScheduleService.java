@@ -7,6 +7,7 @@ import pack.model.Message;
 import pack.model.Schedule;
 import pack.repository.ScheduleRepo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,8 +53,8 @@ public class ScheduleService {
         return scheduleRepo.findAll();
     }
 
-    public List<Schedule> findByHallAndDay(Hall hall, Integer day){
-        return scheduleRepo.findByHallAndDay(hall,day);
+    public List<Schedule> findByHallAndDate(Hall hall, LocalDate date){
+        return scheduleRepo.findByHallAndDate(hall,date);
     }
 
     public List<Schedule> findByHall(Hall hall){
@@ -64,8 +65,8 @@ public class ScheduleService {
         return scheduleRepo.findById(id).get();
     }
 
-    public List<Schedule> findByDay(Integer day){
-        return scheduleRepo.findByDay(day);
+    public List<Schedule> findByDate(LocalDate date){
+        return scheduleRepo.findByDate(date);
     }
 
     public void save(Schedule schedule){

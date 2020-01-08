@@ -7,6 +7,7 @@ import pack.model.Film;
 import pack.model.Genre;
 import pack.repository.FilmRepo;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -55,11 +56,15 @@ public class FilmService {
         return tempGenres;
     }
 
-    public List<Film> findByDay(Integer day){
-        return filmRepo.findByDay(day);
+//    public List<Film> findByDay(Integer day){
+//        return filmRepo.findByDay(day);
+//    }
+
+    public List<Film> findByDate(LocalDate date){
+        return filmRepo.findByDate(date);
     }
 
-    public List<Film> findByDayWithRating(Integer day, Integer limit){
-        return filmRepo.findByDayWithRating(day, limit);
+    public List<Film> findByDayWithRating(LocalDate date, Integer limit){
+        return filmRepo.findByDayWithRating(date, limit);
     }
 }

@@ -1,6 +1,7 @@
 package pack.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "t_place")
@@ -11,18 +12,23 @@ public class Place {
     private Integer row;
     private Integer place;
     private Integer status;
+    private LocalDateTime blockTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Schedule schedule;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Order order;
+
     public Place() {
     }
 
-    public Place(Schedule schedule, Integer row, Integer place, Integer status) {
+    public Place(Schedule schedule, Integer row, Integer place, Integer status, LocalDateTime blockTime) {
         this.schedule = schedule;
         this.row = row;
         this.place = place;
         this.status = status;
+        this.blockTime = blockTime;
     }
 
     public Integer getId() {
@@ -63,6 +69,22 @@ public class Place {
 
     public void setSchedule(Schedule schedule) {
         this.schedule = schedule;
+    }
+
+    public LocalDateTime getBlockTime() {
+        return blockTime;
+    }
+
+    public void setBlockTime(LocalDateTime blockTime) {
+        this.blockTime = blockTime;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     @Override

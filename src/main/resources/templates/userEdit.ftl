@@ -17,6 +17,13 @@
     </form>
 </div>
 
+<h3>Список заказов</h3>
+<#if orders??>
+    <#list orders as order>
+        <a href="/order/${order.id}">${order.id}</a>
+    </#list>
+</#if>
+
 <div>
     <a href="/">Главная</a>
 </div>

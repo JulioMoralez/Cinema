@@ -8,14 +8,15 @@ import pack.model.Film;
 import pack.model.Hall;
 import pack.model.Schedule;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
 public interface ScheduleRepo extends CrudRepository<Schedule, Integer> {
     List<Schedule> findAll();
-    List<Schedule> findByHallAndDay(Hall hall, Integer day);
+    List<Schedule> findByHallAndDate(Hall hall, LocalDate date);
     List<Schedule> findByHall(Hall hall);
 
-    @Query("select s from Schedule s where s.day=:day order by s.time")
-    List<Schedule> findByDay(@Param("day") Integer day);
+    @Query("select s from Schedule s where s.date=:date order by s.time")
+    List<Schedule> findByDate(@Param("date") LocalDate date);
 }

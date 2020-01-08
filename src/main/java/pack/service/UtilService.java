@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.*;
 
@@ -15,8 +16,6 @@ public class UtilService {
 
     @Value("${upload.path}")
     private String rootPicPath;
-
-    private Locale locale = new Locale("ru");
 
     public UtilService() {
     }
@@ -39,6 +38,7 @@ public class UtilService {
         return null;
     }
 
+    private Locale locale = new Locale("ru");
     private List<MyDay> daysList = new ArrayList<>();
     private int currentYear=-1;
     private int currentDay=-1;

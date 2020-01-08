@@ -1,6 +1,7 @@
 package pack.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "t_schedule")
@@ -16,8 +17,10 @@ public class Schedule {
     @ManyToOne(fetch = FetchType.EAGER)
     private Hall hall;
 
-    private Integer day;
     private Integer time;
+    private LocalDate date;
+
+    private Integer price;
 
     public Schedule() {
     }
@@ -46,13 +49,6 @@ public class Schedule {
         this.hall = hall;
     }
 
-    public Integer getDay() {
-        return day;
-    }
-
-    public void setDay(Integer day) {
-        this.day = day;
-    }
 
     public Integer getTime() {
         return time;
@@ -62,13 +58,29 @@ public class Schedule {
         this.time = time;
     }
 
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Schedule{" +
                 "id=" + id +
                 ", film=" + film +
                 ", hall=" + hall +
-                ", day=" + day +
                 ", time=" + time +
                 '}';
     }

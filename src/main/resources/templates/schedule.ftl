@@ -5,12 +5,6 @@
 <@p.page>
 
 <@sc.scheduleAdd/>
-<p>
-<br>
-<p>
-<#if film??>
-    ${film.year}
-</#if>
 
 <p>
 
@@ -23,7 +17,8 @@
             <th>ID</th>
             <th>film</th>
             <th>hall</th>
-            <th>day</th>
+            <th>date</th>
+            <th>price</th>
             <th>time</th>
         </tr>
     <#list schedules as schedule>
