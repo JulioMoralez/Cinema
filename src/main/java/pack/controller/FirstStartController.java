@@ -20,12 +20,25 @@ public class FirstStartController {
     private String password;
 
     private static final String ADD_ROLE= "INSERT INTO t_role (id,name) VALUES (?,?);";
-    private static final String FIND_ADMIN= "SELECT * FROM t_user WHERE username=?;";
+    private static final String ADD_GENRE= "INSERT INTO t_genre (id,name) VALUES (?,?);";
+    private static final String ADD_HALL= "INSERT INTO t_hall (id,name,place,row) VALUES (?,?,?,?);";
 
 
-    @GetMapping("/firststart")
-    public String firstStart(){
+    @GetMapping("/firststart/role")
+    public String firstStartRole(){
         createRole();
+        return "index";
+    }
+
+    @GetMapping("/firststart/genre")
+    public String firstStartGenre(){
+        createGenre();
+        return "index";
+    }
+
+    @GetMapping("/firststart/hall")
+    public String firstStartHall(){
+        createHall();
         return "index";
     }
 
@@ -40,6 +53,56 @@ public class FirstStartController {
                 statement.executeUpdate();
                 statement.setInt(1, 3);
                 statement.setString(2, "ROLE_MODERATOR");
+                statement.executeUpdate();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void createGenre() {
+        try(Connection connection = DriverManager.getConnection(url, username, password)) {
+            try (PreparedStatement statement = connection.prepareStatement(ADD_GENRE)) {
+                statement.setInt(1, 1);
+                statement.setString(2, "Фантастика");
+                statement.executeUpdate();
+                statement.setInt(1, 2);
+                statement.setString(2, "Боевик");
+                statement.executeUpdate();
+                statement.setInt(1, 3);
+                statement.setString(2, "Комедия");
+                statement.executeUpdate();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void createHall() {
+        try(Connection connection = DriverManager.getConnection(url, username, password)) {
+            try (PreparedStatement statement = connection.prepareStatement(ADD_HALL)) {
+                statement.setInt(1, 1);
+                statement.setString(2, "A");
+                statement.setInt(3, 3);
+                statement.setInt(4, 4);
+                statement.executeUpdate();
+                statement.setInt(1, 2);
+                statement.setString(2, "B");
+                statement.setInt(3, 5);
+                statement.setInt(4, 5);
+                statement.executeUpdate();
+                statement.setInt(1, 3);
+                statement.setString(2, "C");
+                statement.setInt(3, 10);
+                statement.setInt(4, 8);
                 statement.executeUpdate();
             }
             catch (SQLException e){
