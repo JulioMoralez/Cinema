@@ -1,7 +1,9 @@
 <#import "parts/page.ftl" as p>
 <#import "parts/film.ftl" as f>
+<#import "parts/login.ftl" as l>
 
 <@p.page>
+
 
 <#if schedule??>
     <table border="1" align="center" cellpadding="4" table-layout="fixed">
@@ -42,4 +44,8 @@
     <button type="submit">Купить</button>
 </>
 </form>
+<p>
+<p>
+<p>
+<a href="/">Главная</a>
 </@p.page>

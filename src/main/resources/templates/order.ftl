@@ -14,5 +14,9 @@
     </#list>
 </table>
 </#if>
+<p>
+<p>
+<p>
+<a href="/">Главная</a>
 
 </@p.page>

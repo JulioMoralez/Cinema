@@ -1,21 +1,26 @@
 package pack.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pack.model.Film;
 import pack.model.Hall;
 import pack.model.Schedule;
+import pack.model.User;
 import pack.service.FilmService;
 import pack.service.HallService;
 import pack.service.ScheduleService;
 import pack.service.UtilService;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ScheduleController {
@@ -36,10 +41,11 @@ public class ScheduleController {
     private List<Film> moviesToday=new ArrayList<>();
     private List<Film> moviesTodayBest=new ArrayList<>();
 
-    @GetMapping("/schedule")
-    public String schedule(@RequestParam(name = "film", required = false) Film film,
-                           @RequestParam(name = "hall", required = false) Hall hall,
-                           @RequestParam(name = "day", required = false) Integer day,
+    @GetMapping("/")
+    public String schedule(@AuthenticationPrincipal User authUser,
+                            @RequestParam(name = "film", required = false) Film film,
+                            @RequestParam(name = "hall", required = false) Hall hall,
+                            @RequestParam(name = "day", required = false) Integer day,
                             Model model){
         List<Film> movies = filmService.findAll();
         List<Hall> halls = hallService.findAll();
@@ -72,11 +78,12 @@ public class ScheduleController {
         model.addAttribute("moviesTodayBest",moviesTodayBest);
 
         model.addAttribute("schedules",scheduleService.findByDate(localDate));
+        model.addAttribute("user", authUser);
 
 //            model.addAttribute("schedules",scheduleService.findAll());
 
         model.addAttribute("film",film);
-        return "schedule";
+        return "index";
     }
 
 
@@ -108,19 +115,19 @@ public class ScheduleController {
         schedule.setTime(hour*60+min);
         scheduleService.save(schedule);
         redirectAttributes.addAttribute("film",film);
-        return "redirect:/schedule";
+        return "redirect:/";
     }
 
     @GetMapping("/schedule/hall/{hall}")
     public String scheduleSelectHall(RedirectAttributes redirectAttributes, @PathVariable Hall hall){
         redirectAttributes.addAttribute("hall",hall);
-        return "redirect:/schedule";
+        return "redirect:/";
     }
 
     @GetMapping("/schedule/day/{day}")
     public String scheduleSelectDay(RedirectAttributes redirectAttributes, @PathVariable Integer day){
         redirectAttributes.addAttribute("day",day);
-        return "redirect:/schedule";
+        return "redirect:/";
     }
 
 
