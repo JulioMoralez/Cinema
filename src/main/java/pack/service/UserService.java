@@ -1,6 +1,7 @@
 package pack.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,10 +13,7 @@ import pack.model.User;
 import pack.repository.RoleRepo;
 import pack.repository.UserRepo;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static pack.config.Consts.*;
 
@@ -53,6 +51,13 @@ public class UserService implements UserDetailsService {
 
         user.setActive(true);
         user.setRoles(Collections.singleton(ROLE_USER));
+        if (user.getUsername().equals("admin")){
+            Set<Role> roles = new HashSet<>();
+            roles.add(ROLE_USER);
+            roles.add(ROLE_MODERATOR);
+            roles.add(ROLE_ADMIN);
+            user.setRoles(roles);   // !!! для теста даём полные права пользователю с ником admin
+        }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepo.save(user);
         return true;
