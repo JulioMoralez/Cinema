@@ -17,6 +17,7 @@ public class User implements UserDetails {
     private Integer id;
     private String username;
     private String password;
+    private String name;
     @Transient
     private String passwordConfirm;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -27,6 +28,14 @@ public class User implements UserDetails {
     private String verifyCode;
 
     public User() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getId() {

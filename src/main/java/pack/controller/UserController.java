@@ -16,7 +16,7 @@ import java.util.Map;
 
 import static pack.config.Consts.ROLES;
 
-@Controller
+
 public class UserController {
 
     @Autowired

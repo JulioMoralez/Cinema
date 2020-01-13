@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import pack.dto.UserDto;
 import pack.model.Genre;
 import pack.model.Role;
 import pack.model.User;
@@ -44,7 +45,6 @@ public class UserService implements UserDetailsService {
 
     public boolean saveUser(User user) {
         User userFromDB = userRepo.findByUsername(user.getUsername());
-
         if (userFromDB != null) {
             return false;
         }
@@ -63,16 +63,30 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public boolean updateUser(User user) {
-        User userFromDB = userRepo.findByUsername(user.getUsername());
-
-        if ((userFromDB != null) && !(user.getId().equals(userFromDB.getId()))) {
-            return false;
+    public UserDto saveUser(UserDto userDto) {
+        User user = userRepo.findByUsername(userDto.getUsername());
+        if (user != null) {
+            return null;
         }
+        user = new User();
+        user.setUsername(userDto.getUsername());
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
 
-        userRepo.save(user);
-        return true;
+        user.setActive(true);
+        user.setRoles(Collections.singleton(ROLE_USER));
+        if (user.getUsername().equals("admin")){
+            Set<Role> roles = new HashSet<>();
+            roles.add(ROLE_USER);
+            roles.add(ROLE_MODERATOR);
+            roles.add(ROLE_ADMIN);
+            user.setRoles(roles);   // !!! для теста даём полные права пользователю с ником admin
+        }
+        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        return new UserDto(userRepo.save(user));
     }
+
+
 
     public int deleteUser(Integer id) {
         if (userRepo.findById(id).isPresent()) {
@@ -82,7 +96,7 @@ public class UserService implements UserDetailsService {
         return -1;
     }
 
-    public Iterable<User> readAll() {
+    public List<User> findAll() {
         return userRepo.findAll();
     }
 
@@ -106,4 +120,34 @@ public class UserService implements UserDetailsService {
         return tempRoles;
     }
 
+    public Set<Role> getRoles(List<Role> roles){
+        Set<Role> tempRoles = new HashSet<>();
+        for (Role role: roles) {
+            if (role.isCheck()) {
+                tempRoles.add(role);
+            }
+        }
+        return tempRoles;
+    }
+
+    public boolean updateUser(User user) {
+        User userFromDB = userRepo.findByUsername(user.getUsername());
+
+        if ((userFromDB != null) && !(user.getId().equals(userFromDB.getId()))) {
+            return false;
+        }
+
+        userRepo.save(user);
+        return true;
+    }
+
+    public void updateUser(UserDto userDto) {
+        User userFromDB = userRepo.findById(userDto.getId()).orElse(null);
+        if (userFromDB!=null){
+            userFromDB.setName(userDto.getName());
+            userFromDB.setEmail(userDto.getEmail());
+            userFromDB.setRoles(getRoles(userDto.getRoles()));
+            userRepo.save(userFromDB);
+        }
+    }
 }

@@ -15,6 +15,10 @@ public class Role implements GrantedAuthority {
     @Transient
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
+    @Transient
+    private boolean check;
+    @Transient
+    private String runame;
 
     public Role() {
     }
@@ -26,6 +30,12 @@ public class Role implements GrantedAuthority {
     public Role(Integer id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Role(Integer id, String name, String runame) {
+        this.id = id;
+        this.name = name;
+        this.runame = runame;
     }
 
     public Integer getId() {
@@ -50,6 +60,22 @@ public class Role implements GrantedAuthority {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
+    public String getRuname() {
+        return runame;
+    }
+
+    public void setRuname(String runame) {
+        this.runame = runame;
     }
 
     @Override

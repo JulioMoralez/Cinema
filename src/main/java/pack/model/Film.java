@@ -88,7 +88,6 @@ public class Film {
                 ", year=" + year +
                 ", picPath='" + picPath + '\'' +
                 ", length=" + length +
-                ", genres=" + genres +
                 '}';
     }
 }

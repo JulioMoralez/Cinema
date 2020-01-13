@@ -67,6 +67,7 @@
             <version>5.2.0.RELEASE</version>
         </dependency>
 
+
     </dependencies>
 
     <build>

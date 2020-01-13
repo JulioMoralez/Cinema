@@ -1,5 +1,7 @@
 package pack.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ public class Genre {
 
     private String name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "genres")
     private Set<Film> films;
 
