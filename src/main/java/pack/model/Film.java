@@ -24,6 +24,10 @@ public class Film {
     public Film() {
     }
 
+    public Film(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

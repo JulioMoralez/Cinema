@@ -1,5 +1,6 @@
 package pack.service;
 
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -23,24 +24,28 @@ public class FilmService {
     @Autowired
     private GenreService genreService;
 
-    public List<Film> findAll() {
-        return filmRepo.findAll();
-    }
-
     public Film findById(Integer id){
         return filmRepo.findById(id).get();
     }
 
-    public void save(Film film){
-        filmRepo.save(film);
+    public List<Film> findAll() {
+        return filmRepo.findAll();
     }
 
-    public int deleteFilm(Integer id) {
+    public Film save(Film film){
+        return filmRepo.save(film);
+    }
+
+    public Film delete(Integer id) {
         if (filmRepo.findById(id).isPresent()) {
-            filmRepo.deleteById(id);
-            return 1;
+            try {
+                filmRepo.deleteById(id);
+            }
+            catch (Exception e){
+                return new Film(-1);
+            }
         }
-        return -1;
+        return new Film(id);
     }
 
     public Set<Genre> getGenres(Map<String,String> form){
