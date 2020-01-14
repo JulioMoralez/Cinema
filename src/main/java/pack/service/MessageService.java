@@ -13,11 +13,27 @@ public class MessageService {
     @Autowired
     private MessageRepo messageRepo;
 
-    public Iterable<Message> findAll() {
+    public Message findById(Integer id){
+        return messageRepo.findById(id).get();
+    }
+
+    public List<Message> findAll() {
         return messageRepo.findAll();
     }
 
-    public void save(Message text){
-        messageRepo.save(text);
+    public Message save(Message film){
+        return messageRepo.save(film);
+    }
+
+    public Message delete(Integer id) {
+        if (messageRepo.findById(id).isPresent()) {
+            try {
+                messageRepo.deleteById(id);
+            }
+            catch (Exception e){
+                return new Message(-1);
+            }
+        }
+        return new Message(id);
     }
 }

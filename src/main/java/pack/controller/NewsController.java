@@ -16,7 +16,7 @@ import pack.service.UtilService;
 
 import java.util.List;
 
-@Controller
+
 public class NewsController {
 
     @Autowired

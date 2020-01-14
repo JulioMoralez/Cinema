@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import pack.model.User;
 import pack.service.MailService;
 
-@Controller
+
 public class MainContriller {
 
     @Autowired

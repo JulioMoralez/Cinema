@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
 
-@Controller
+
 public class HallController {
 
     @Autowired

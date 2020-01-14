@@ -1,5 +1,7 @@
 package pack.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -14,13 +16,19 @@ public class Place {
     private Integer status;
     private LocalDateTime blockTime;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Schedule schedule;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
 
     public Place() {
+    }
+
+    public Place(Integer id) {
+        this.id = id;
     }
 
     public Place(Schedule schedule, Integer row, Integer place, Integer status, LocalDateTime blockTime) {

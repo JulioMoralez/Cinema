@@ -25,6 +25,10 @@ public class Schedule {
     public Schedule() {
     }
 
+    public Schedule(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

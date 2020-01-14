@@ -20,6 +20,10 @@ public class Message {
     public Message() {
     }
 
+    public Message(Integer id) {
+        this.id = id;
+    }
+
     public Message(String text, User author) {
         this.text = text;
         this.author=author;

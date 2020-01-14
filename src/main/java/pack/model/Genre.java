@@ -22,6 +22,10 @@ public class Genre {
     public Genre() {
     }
 
+    public Genre(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

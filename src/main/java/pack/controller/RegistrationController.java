@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import pack.model.User;
 import pack.service.UserService;
 
-@Controller
+
 public class RegistrationController {
 
     @Autowired

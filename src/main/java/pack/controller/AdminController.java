@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 import static pack.config.Consts.ROLES;
 
-@Controller
+
 public class AdminController {
 
     @Autowired

@@ -20,8 +20,28 @@ public class PlaceService {
     @Autowired
     private PlaceRepo placeRepo;
 
-    public void save(Place place){
-        placeRepo.save(place);
+    public Place findById(Integer id){
+        return placeRepo.findById(id).get();
+    }
+
+    public List<Place> findAll() {
+        return placeRepo.findAll();
+    }
+
+    public Place save(Place film){
+        return placeRepo.save(film);
+    }
+
+    public Place delete(Integer id) {
+        if (placeRepo.findById(id).isPresent()) {
+            try {
+                placeRepo.deleteById(id);
+            }
+            catch (Exception e){
+                return new Place(-1);
+            }
+        }
+        return new Place(id);
     }
 
     public Place findByScheduleAndRowAndPlace(Schedule schedule, Integer rowValue, Integer placeValue){

@@ -2,40 +2,39 @@ package pack.restController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pack.model.Film;
-import pack.service.FilmService;
+import pack.model.Place;
+import pack.service.PlaceService;
 
 import java.util.List;
 
 
-
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-public class FilmRest {
+public class PlaceRest {
 
     @Autowired
-    private FilmService filmService;
+    private PlaceService placeService;
 
-    static final String URL = "/film";
+    static final String URL = "/place";
 
     @RequestMapping(value = URL + "/{entity}", method = RequestMethod.GET, produces = "application/json")
-    public Film find(@PathVariable Film entity){
+    public Place find(@PathVariable Place entity){
         return entity;
     }
 
     @RequestMapping(value = URL + "s", method = RequestMethod.GET, produces = "application/json")
-    public List<Film> findAll() {
-        return filmService.findAll();
+    public List<Place> findAll() {
+        return placeService.findAll();
     }
 
     @RequestMapping(value = URL, method = RequestMethod.POST, consumes = "application/json")
-    public Film save(@RequestBody Film entity){
-        return filmService.save(entity);
+    public Place save(@RequestBody Place entity){
+        return placeService.save(entity);
     }
 
     @RequestMapping(value = URL + "/{id}", method = RequestMethod.DELETE, produces = "application/json")
-    public Film delete(@PathVariable Integer id){
-        return filmService.delete(id);
+    public Place delete(@PathVariable Integer id){
+        return placeService.delete(id);
     }
 }
 

@@ -49,8 +49,28 @@ public class ScheduleService {
         this.days = days;
     }
 
-    public List<Schedule> findAll(){
+    public Schedule findById(Integer id){
+        return scheduleRepo.findById(id).get();
+    }
+
+    public List<Schedule> findAll() {
         return scheduleRepo.findAll();
+    }
+
+    public Schedule save(Schedule film){
+        return scheduleRepo.save(film);
+    }
+
+    public Schedule delete(Integer id) {
+        if (scheduleRepo.findById(id).isPresent()) {
+            try {
+                scheduleRepo.deleteById(id);
+            }
+            catch (Exception e){
+                return new Schedule(-1);
+            }
+        }
+        return new Schedule(id);
     }
 
     public List<Schedule> findByHallAndDate(Hall hall, LocalDate date){
@@ -61,15 +81,8 @@ public class ScheduleService {
         return scheduleRepo.findByHall(hall);
     }
 
-    public Schedule findById(Integer id){
-        return scheduleRepo.findById(id).get();
-    }
-
     public List<Schedule> findByDate(LocalDate date){
         return scheduleRepo.findByDate(date);
     }
 
-    public void save(Schedule schedule){
-        scheduleRepo.save(schedule);
-    }
 }

@@ -1,5 +1,7 @@
 package pack.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -12,9 +14,11 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Schedule schedule;
 
@@ -26,6 +30,10 @@ public class Order {
     private Integer price;
 
     public Order() {
+    }
+
+    public Order(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {
