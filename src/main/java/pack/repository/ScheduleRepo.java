@@ -19,4 +19,7 @@ public interface ScheduleRepo extends CrudRepository<Schedule, Integer> {
 
     @Query("select s from Schedule s where s.date=:date order by s.time")
     List<Schedule> findByDate(@Param("date") LocalDate date);
+
+    @Query("select s from Schedule s where s.date BETWEEN :startDate AND :endDate order by s.time")
+    List<Schedule> findByDateWeek(@Param("startDate") LocalDate startDate, @Param("endDate")LocalDate endDate);
 }

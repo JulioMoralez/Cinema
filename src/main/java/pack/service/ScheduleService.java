@@ -85,4 +85,10 @@ public class ScheduleService {
         return scheduleRepo.findByDate(date);
     }
 
+    public List<Schedule> findByDateWeek(){
+        LocalDate startDate = LocalDate.now();
+        return scheduleRepo.findByDateWeek(startDate, startDate.plusDays(6));
+    }
+
+
 }

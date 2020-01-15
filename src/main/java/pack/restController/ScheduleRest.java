@@ -15,6 +15,7 @@ public class ScheduleRest {
     @Autowired
     private ScheduleService scheduleService;
 
+
     static final String URL = "/schedule";
 
     @RequestMapping(value = URL + "/{entity}", method = RequestMethod.GET, produces = "application/json")
@@ -35,6 +36,13 @@ public class ScheduleRest {
     @RequestMapping(value = URL + "/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public Schedule delete(@PathVariable Integer id){
         return scheduleService.delete(id);
+    }
+
+    //==========================
+
+    @RequestMapping(value = URL + "s/week", method = RequestMethod.GET, produces = "application/json")
+    public List<Schedule> findByDateWeek() {
+        return scheduleService.findByDateWeek();
     }
 }
 

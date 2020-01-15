@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pack.model.Film;
 import pack.service.FilmService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -37,5 +38,17 @@ public class FilmRest {
     public Film delete(@PathVariable Integer id){
         return filmService.delete(id);
     }
+
+    //=============================
+    @RequestMapping(value = URL + "s/day/{day}", method = RequestMethod.GET, produces = "application/json")
+    public List<Film> findFilmDay(@PathVariable Integer day) {
+        LocalDate localDate = LocalDate.now();
+        if (day!=null) {
+            int d = (day-localDate.getDayOfWeek().getValue()+7)%7;
+            localDate=localDate.plusDays(d);
+        }
+        return filmService.findByDate(localDate);
+    }
+
 }
 
