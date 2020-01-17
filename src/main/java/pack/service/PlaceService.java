@@ -52,6 +52,7 @@ public class PlaceService {
         return placeRepo.findBySchedule(schedule);
     }
 
+
     public List<Place> findByScheduleAndStatus(Schedule schedule, Integer status){
         return placeRepo.findByScheduleAndStatus(schedule,status);
     }

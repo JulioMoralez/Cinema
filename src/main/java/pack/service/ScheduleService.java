@@ -2,8 +2,10 @@ package pack.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pack.dto.PlacesInHallDto;
 import pack.model.Hall;
 import pack.model.Message;
+import pack.model.Place;
 import pack.model.Schedule;
 import pack.repository.ScheduleRepo;
 
@@ -16,6 +18,9 @@ public class ScheduleService {
 
     @Autowired
     private ScheduleRepo scheduleRepo;
+
+    @Autowired
+    private PlaceService placeService;
 
     private List<Integer> days = new ArrayList<>();
     private List<Integer> hours = new ArrayList<>();
@@ -90,5 +95,34 @@ public class ScheduleService {
         return scheduleRepo.findByDateWeek(startDate, startDate.plusDays(6));
     }
 
+    public PlacesInHallDto fillHall(PlacesInHallDto placesInHallDto) {
+        int[][] placesForSchedule = new int[placesInHallDto.getMaxRow()][placesInHallDto.getMaxPlace()];
+
+        int authUser = placesInHallDto.getUserId();
+        int price = 0;
+        int ticketCount = 0;
+
+        List<Place> places = placeService.findBySchedule(new Schedule(placesInHallDto.getScheduleId()));
+        for (Place place : places) {
+            if (placeService.resetBlockTime(place)) {
+                placeService.save(place);
+            }
+            if (place.getOrder() == null) {
+                if (!place.getStatus().equals(0)) {
+                    if (place.getStatus().equals(authUser)) {
+                        placesForSchedule[place.getRow()][place.getPlace()] = 1;
+                        ticketCount++;
+                    } else {
+                        placesForSchedule[place.getRow()][place.getPlace()] = 2;
+                    }
+                }
+            } else {
+                placesForSchedule[place.getRow()][place.getPlace()] = -1;
+            }
+
+        }
+        placesInHallDto.setPlacesForSchedule(placesForSchedule);
+        return placesInHallDto;
+    }
 
 }

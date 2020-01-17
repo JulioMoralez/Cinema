@@ -39,32 +39,32 @@ public class HallController {
         Hall hall = schedule.getHall();
         int[][] placesForForm = new int[hall.getRow()][hall.getPlace()];
 
-        int price=0;
-        int ticketCount=0;
-        List<Place> places = placeService.findBySchedule(schedule);
-        for (Place place:places){
-            if (placeService.resetBlockTime(place)){
-                placeService.save(place);
-            }
-            if(place.getOrder()==null){
-                if(!place.getStatus().equals(0)){
-                    if (place.getStatus().equals(authUser.getId())){
-                        placesForForm[place.getRow()-1][place.getPlace()-1]=1;
-                        ticketCount++;
-                    }
-                    else {
-                        placesForForm[place.getRow()-1][place.getPlace()-1]=2;
-                    }
-                }
-            }
-            else {
-                placesForForm[place.getRow()-1][place.getPlace()-1]=-1;
-            }
-
-        }
-        model.addAttribute("places",placeService.findBySchedule(schedule));
-        model.addAttribute("placesForForm",placesForForm);
-        model.addAttribute("ticketCount",ticketCount);
+//        int price=0;
+//        int ticketCount=0;
+//        List<Place> places = placeService.findBySchedule(schedule);
+//        for (Place place:places){
+//            if (placeService.resetBlockTime(place)){
+//                placeService.save(place);
+//            }
+//            if(place.getOrder()==null){
+//                if(!place.getStatus().equals(0)){
+//                    if (place.getStatus().equals(authUser.getId())){
+//                        placesForForm[place.getRow()-1][place.getPlace()-1]=1;
+//                        ticketCount++;
+//                    }
+//                    else {
+//                        placesForForm[place.getRow()-1][place.getPlace()-1]=2;
+//                    }
+//                }
+//            }
+//            else {
+//                placesForForm[place.getRow()-1][place.getPlace()-1]=-1;
+//            }
+//
+//        }
+//        model.addAttribute("places",placeService.findBySchedule(schedule));
+//        model.addAttribute("placesForForm",placesForForm);
+//        model.addAttribute("ticketCount",ticketCount);
         return "hall";
     }
 
