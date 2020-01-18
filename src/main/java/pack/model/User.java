@@ -27,6 +27,7 @@ public class User implements UserDetails {
     private boolean active;
     private String email;
     private String verifyCode;
+    private boolean emailConfirmed;
 
     public User() {
     }
@@ -97,6 +98,14 @@ public class User implements UserDetails {
 
     public void setVerifyCode(String verifyCode) {
         this.verifyCode = verifyCode;
+    }
+
+    public boolean isEmailConfirmed() {
+        return emailConfirmed;
+    }
+
+    public void setEmailConfirmed(boolean emailConfirmed) {
+        this.emailConfirmed = emailConfirmed;
     }
 
     @Override

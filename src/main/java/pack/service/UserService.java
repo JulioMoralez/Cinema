@@ -39,7 +39,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public User read(Integer id) {
+    public User findById(Integer id) {
         return userRepo.findById(id).orElse(null);
     }
 
@@ -50,6 +50,7 @@ public class UserService implements UserDetailsService {
         }
 
         user.setActive(true);
+        user.setEmailConfirmed(false);
         user.setRoles(Collections.singleton(ROLE_USER));
         if (user.getUsername().equals("admin")){
             Set<Role> roles = new HashSet<>();

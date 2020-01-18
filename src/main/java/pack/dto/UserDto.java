@@ -16,8 +16,14 @@ public class UserDto {
     private String password;
     private List<Role> roles = new ArrayList<>();
     private String email;
+    private Boolean emailConfirmed;
+    private String verifyCode;
 
     public UserDto() {
+    }
+
+    public UserDto(Integer id) {
+        this.id = id;
     }
 
         public UserDto(User user){
@@ -25,6 +31,7 @@ public class UserDto {
             this.username = user.getUsername();
             this.name = user.getName();
             this.email = user.getEmail();
+            this.emailConfirmed = user.isEmailConfirmed();
             this.roles.add(new Role(1,"ROLE_USER", "Пользователь"));
             this.roles.add(new Role(2,"ROLE_ADMIN", "Администратор"));
             this.roles.add(new Role(3,"ROLE_MODERATOR", "Модератор"));
@@ -83,6 +90,22 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean getEmailConfirmed() {
+        return emailConfirmed;
+    }
+
+    public void setEmailConfirmed(Boolean emailConfirmed) {
+        this.emailConfirmed = emailConfirmed;
+    }
+
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
     }
 
     @Override

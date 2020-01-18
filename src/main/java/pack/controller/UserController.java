@@ -28,7 +28,7 @@ public class UserController {
     @GetMapping("/user/{user}")
     public String userEdit(@AuthenticationPrincipal User authUser, @PathVariable User user, Model model){
         if ((user==null) || (!userService.isAdmin(authUser))){
-            user = userService.read(authUser.getId());
+            user = userService.findById(authUser.getId());
         }
         model.addAttribute("user",user);
         model.addAttribute("orders",orderService.findByUser(user));
@@ -42,7 +42,7 @@ public class UserController {
             return "redirect:/admin";
         }
         else {
-            model.addAttribute("user", userService.read(authUser.getId()));
+            model.addAttribute("user", userService.findById(authUser.getId()));
             model.addAttribute("roles",ROLES);
             return "userEdit";
         }

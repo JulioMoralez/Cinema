@@ -57,34 +57,29 @@ public class ScheduleRest {
         return scheduleService.findByDateWeek();
     }
 
-    @RequestMapping(value = URL + "/placelist/", method = RequestMethod.POST, consumes = "application/json")
-    public PlacesInHallDto placelist(@RequestBody PlacesInHallDto placesInHallDto){
-//        model.addAttribute("places",placeService.findBySchedule(schedule));
-//        model.addAttribute("placesForSchedule",placesForSchedule);
-//        model.addAttribute("ticketCount",ticketCount);
-        return scheduleService.fillHall(placesInHallDto);
-    }
 
     @RequestMapping(value = URL + "/placeselect", method = RequestMethod.POST, consumes = "application/json")
     public PlacesInHallDto placeSelect(@RequestBody PlacesInHallDto placesInHallDto){
-        Schedule schedule=scheduleService.findById(placesInHallDto.getScheduleId());
-        int rowValue = placesInHallDto.getRow();
-        int placeValue = placesInHallDto.getPlace();
-        int authUser = placesInHallDto.getUserId();
-        Place place = placeService.findByScheduleAndRowAndPlace(schedule,rowValue,placeValue);
-        if (place==null){
-            placeService.save(new Place(schedule,rowValue,placeValue,authUser, LocalDateTime.now()));
-        }
-        else {
-            if (place.getStatus().equals(authUser)){
-                place.setBlockTime(null);
-                place.setStatus(0);
-                placeService.save(place);
+        if ((placesInHallDto.getPlace()!=-1) && (placesInHallDto.getUserId()!=-1)){
+            Schedule schedule=scheduleService.findById(placesInHallDto.getScheduleId());
+            int rowValue = placesInHallDto.getRow();
+            int placeValue = placesInHallDto.getPlace();
+            int authUser = placesInHallDto.getUserId();
+            Place place = placeService.findByScheduleAndRowAndPlace(schedule,rowValue,placeValue);
+            if (place==null){
+                placeService.save(new Place(schedule,rowValue,placeValue,authUser, LocalDateTime.now()));
             }
-            else if((place.getStatus().equals(0)) && (place.getOrder()==null)){
-                place.setBlockTime(LocalDateTime.now());
-                place.setStatus(authUser);
-                placeService.save(place);
+            else {
+                if (place.getStatus().equals(authUser)){
+                    place.setBlockTime(null);
+                    place.setStatus(0);
+                    placeService.save(place);
+                }
+                else if((place.getStatus().equals(0)) && (place.getOrder()==null)){
+                    place.setBlockTime(LocalDateTime.now());
+                    place.setStatus(authUser);
+                    placeService.save(place);
+                }
             }
         }
         return scheduleService.fillHall(placesInHallDto);
