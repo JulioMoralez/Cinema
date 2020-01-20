@@ -2,8 +2,10 @@ package pack.restController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pack.model.Film;
 import pack.service.FilmService;
+import pack.service.UtilService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,6 +18,9 @@ public class FilmRest {
 
     @Autowired
     private FilmService filmService;
+
+    @Autowired
+    private UtilService utilService;
 
     static final String URL = "/film";
 
@@ -48,6 +53,21 @@ public class FilmRest {
             localDate=localDate.plusDays(d);
         }
         return filmService.findByDate(localDate);
+    }
+
+//    @RequestMapping(value = URL + "/img", method = RequestMethod.POST, consumes = "multipart/form-data")
+//    public String  uploadFile(@RequestBody MultipartFile file){
+//        System.out.println("ololololol");
+//        utilService.generatePicPath(file);
+//        return "1234";
+//    }
+
+    @RequestMapping(value = URL + "/img", method=RequestMethod.POST, consumes = "multipart/form-data")
+    public String fileUpload(@RequestParam("id") String id, @RequestParam("image") MultipartFile file){
+        Film film = filmService.findById(Integer.parseInt(id));
+        film.setPicPath(utilService.generatePicPath(file));
+        filmService.save(film);
+        return "ok";
     }
 
 }
