@@ -12,15 +12,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.servlet.MultipartConfigElement;
 
 @Configuration
-public class MvcConfig implements WebMvcConfigurer {
+public class WebMvcConfig implements WebMvcConfigurer {
 
     @Value("${upload.path}")
     private String uploadPath;
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        //registry.addViewController("/login1").setViewName("login");
-    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

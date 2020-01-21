@@ -55,13 +55,6 @@ public class FilmRest {
         return filmService.findByDate(localDate);
     }
 
-//    @RequestMapping(value = URL + "/img", method = RequestMethod.POST, consumes = "multipart/form-data")
-//    public String  uploadFile(@RequestBody MultipartFile file){
-//        System.out.println("ololololol");
-//        utilService.generatePicPath(file);
-//        return "1234";
-//    }
-
     @RequestMapping(value = URL + "/img", method=RequestMethod.POST, consumes = "multipart/form-data")
     public String fileUpload(@RequestParam("id") String id, @RequestParam("image") MultipartFile file){
         Film film = filmService.findById(Integer.parseInt(id));
