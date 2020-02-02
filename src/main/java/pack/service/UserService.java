@@ -142,13 +142,26 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public void updateUser(UserDto userDto) {
+    public boolean updateUser(UserDto userDto) {
         User userFromDB = userRepo.findById(userDto.getId()).orElse(null);
         if (userFromDB!=null){
             userFromDB.setName(userDto.getName());
+            if (!userFromDB.getEmail().equals(userDto.getEmail())) {
+                userFromDB.setEmailConfirmed(false);
+            }
             userFromDB.setEmail(userDto.getEmail());
-            userFromDB.setRoles(getRoles(userDto.getRoles()));
+            if (userFromDB.getUsername().equals("admin")){
+                Set<Role> roles = new HashSet<>();
+                roles.add(ROLE_USER);
+                roles.add(ROLE_MODERATOR);
+                roles.add(ROLE_ADMIN);
+                userFromDB.setRoles(roles);   // !!! для теста даём полные права пользователю с ником admin
+            } else {
+                userFromDB.setRoles(getRoles(userDto.getRoles()));
+            }
             userRepo.save(userFromDB);
+            return true;
         }
+        return false;
     }
 }

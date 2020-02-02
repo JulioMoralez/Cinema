@@ -52,8 +52,8 @@ public class UserRest {
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.POST, consumes = "application/json")
-    public void updateUser(@PathVariable Integer id, @RequestBody UserDto userDto){
-        userService.updateUser(userDto);
+    public boolean updateUser(@PathVariable Integer id, @RequestBody UserDto userDto){
+        return userService.updateUser(userDto);
     }
 
     @RequestMapping(value = "/user/sendemail", method = RequestMethod.POST, consumes = "application/json")
