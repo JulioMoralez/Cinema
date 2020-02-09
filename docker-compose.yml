@@ -17,9 +17,9 @@ services:
     restart: unless-stopped
   # APP*****************************************
   springbootapp:
-    image: appcinema:latest
+    image: cinema:latest
     network_mode: bridge
-    container_name: appcinema
+    container_name: cinema
     expose:
       - 8080
     ports:
