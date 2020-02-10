@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 public class ScheduleRest {
 

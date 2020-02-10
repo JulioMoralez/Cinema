@@ -18,7 +18,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 public class OrderRest {
 

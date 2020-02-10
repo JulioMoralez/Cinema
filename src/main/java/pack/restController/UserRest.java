@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 public class UserRest {
 

@@ -14,7 +14,7 @@ import pack.service.ScheduleService;
 
 import java.time.LocalDateTime;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 public class PlaceSelectWebSocket {
 
