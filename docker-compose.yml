@@ -1,7 +1,7 @@
 version: "3"
 services:
   postgres:
-    image: postgres:latest
+    image: juliomoralez/postgres:latest
     network_mode: bridge
     container_name: postgres
     volumes:
@@ -15,9 +15,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=cinema
     restart: unless-stopped
-  # APP*****************************************
   springbootapp:
-    image: cinema:latest
+    image: juliomoralez/cinema:latest
     network_mode: bridge
     container_name: cinema
     expose:
@@ -29,5 +28,14 @@ services:
       - postgres
     links:
       - postgres
+  angularapp:
+    image: juliomoralez/cinemaang:latest
+    network_mode: bridge
+    container_name: cinemaang
+    expose:
+      - 4200
+    ports:
+      - 4200:80
+    restart: unless-stopped
 volumes:
   postgres-data:
