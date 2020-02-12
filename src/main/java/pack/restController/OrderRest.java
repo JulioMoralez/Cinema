@@ -93,7 +93,12 @@ public class OrderRest {
 
         order.setSchedule(schedule);
         order.setKey(key);
-        order.setPrice(schedule.getPrice()*ticketCount);
+        if (schedule.getPrice()!=null){
+            order.setPrice(schedule.getPrice()*ticketCount);
+        }
+        else {
+            order.setPrice(0);
+        }
         order.setOrderTime(LocalDateTime.now());
         order.setUser(userService.findById(authUser));
         order = orderService.save(order);
@@ -104,7 +109,6 @@ public class OrderRest {
             place.setOrder(order);
             placeService.save(place);
         }
-
         return orderConfirmDto;
     }
 

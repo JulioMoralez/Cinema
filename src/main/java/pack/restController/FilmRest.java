@@ -56,11 +56,10 @@ public class FilmRest {
     }
 
     @RequestMapping(value = URL + "/img", method=RequestMethod.POST, consumes = "multipart/form-data")
-    public String fileUpload(@RequestParam("id") String id, @RequestParam("image") MultipartFile file){
+    public void fileUpload(@RequestParam("id") String id, @RequestParam("image") MultipartFile file){
         Film film = filmService.findById(Integer.parseInt(id));
         film.setPicPath(utilService.generatePicPath(file));
         filmService.save(film);
-        return "ok";
     }
 
 }
