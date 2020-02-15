@@ -14,6 +14,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Value("${url}")
     private String url;
 
+    @Value("${front.port}")
+    private String frontPort;
+
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic");
@@ -22,7 +25,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").setAllowedOrigins(url + ":4200").withSockJS();
+        registry.addEndpoint("/ws").setAllowedOrigins(url + ":" + frontPort).withSockJS();
     }
 
 
