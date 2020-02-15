@@ -5,11 +5,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pack.model.Film;
 import pack.service.FilmService;
+import pack.service.S3Service;
 import pack.service.UtilService;
 
 import java.time.LocalDate;
 import java.util.List;
-
+import java.util.UUID;
 
 
 @CrossOrigin
@@ -21,6 +22,9 @@ public class FilmRest {
 
     @Autowired
     private UtilService utilService;
+
+    @Autowired
+    private S3Service s3Service;
 
     static final String URL = "/film";
 
@@ -58,7 +62,10 @@ public class FilmRest {
     @RequestMapping(value = URL + "/img", method=RequestMethod.POST, consumes = "multipart/form-data")
     public void fileUpload(@RequestParam("id") String id, @RequestParam("image") MultipartFile file){
         Film film = filmService.findById(Integer.parseInt(id));
-        film.setPicPath(utilService.generatePicPath(file));
+       // film.setPicPath(utilService.generatePicPath(file)); // для сохранения файлов локально
+        String picPath = UUID.randomUUID().toString() + "." + file.getOriginalFilename();
+        s3Service.uploadFile(picPath, file);
+        film.setPicPath(picPath);
         filmService.save(film);
     }
 
