@@ -3,7 +3,9 @@ package pack.service;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,11 @@ public class S3Service {
         try {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.getSize());
-            s3client.putObject(bucketName, keyName, file.getInputStream(), metadata);
+            //s3client.putObject(bucketName, keyName, file.getInputStream(), metadata);
+            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, keyName, file.getInputStream(), metadata);
+            putObjectRequest.withCannedAcl(CannedAccessControlList.PublicRead);
+            s3client.putObject(putObjectRequest);
+
         } catch(IOException ioe) {
             System.out.println("IOException: " + ioe.getMessage());
         } catch (AmazonServiceException ase) {
